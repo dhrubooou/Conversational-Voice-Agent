@@ -24,12 +24,16 @@ backend/app/
 ## ⚡ Core Technical Capabilities
 
 1. **Sub-second Conversational Pipeline**: Combines Deepgram (STT/TTS), OpenAI (GPT-4o-mini), and Silero VAD into an extremely low-latency audio stream supporting interruptions and overlapping talk.
-2. **WebSocket-driven Event Broadcasts**: HTTP polling is completely replaced by a centralized `WebSocketManager`. State updates are persisted to the database and broadcasted in real-time to supervisor dashboards in under a millisecond.
-3. **PSTN to WebRTC Audio Gateway Bridge**: Bi-directional linear PCM (16kHz) to telephone Mu-law (8kHz) audio transcoder built with `audioop` over secure WebSockets, enabling real phone representatives to connect to WebRTC rooms instantly.
-4. **Twilio Warm Transfer with DTMF Controls**: Places outbound calls to representatives, speaks an AI-generated concise summary of the transcript, and processes `1` (accept) or `2` (decline) DTMF dial pad choices.
-5. **Database-backed Tools**: Core LLM functions `check_availability()` and `book_appointment()` read and write to local MySQL schemas with built-in weekend blocking.
-6. **Detailed Post-Call summaries**: Evaluates call transcript upon disconnect, generating a beautiful structured markdown summary containing Call Details, Booking codes, and timeline highlights.
-7. **Production JSON Logging & Configuration**: Incorporates structured JSON logging formatters and centralized Pydantic settings loading.
+2. **Local Ollama Llama2 Conversation**: Full local integration with **Ollama (`llama2`)** acting as the primary conversational and dental-clinic-scheduling chatbot.
+3. **Dual AI Clients Isolation**: Decoupled AI request engines in the REST API—featuring a cloud-based `openai_extractor_client` for highly accurate entity extraction (GPT-4o-mini) and a local `llm_conversation_client` routing general chitchat natively to local Ollama.
+4. **WebSocket-driven Event Broadcasts**: HTTP polling is completely replaced by a centralized `WebSocketManager`. State updates are persisted to the database and broadcasted in real-time to supervisor dashboards in under a millisecond.
+5. **Self-Healing Dual Storage**: A highly resilient transactional layer that automatically and silently falls back to in-memory schemas if the local MySQL database goes offline, guaranteeing 100% active live event broadcasting.
+6. **Browser-Native Voice Recognition (Speech-to-Text)**: Standard HTML5 Web Speech API integrated directly into the Caller interface, allowing local voice-to-text transcription right inside the browser with zero connection drop-offs.
+7. **PSTN to WebRTC Audio Gateway Bridge**: Bi-directional linear PCM (16kHz) to telephone Mu-law (8kHz) audio transcoder built with `audioop` over secure WebSockets, enabling real phone representatives to connect to WebRTC rooms instantly.
+8. **Twilio Warm Transfer with DTMF Controls**: Places outbound calls to representatives, speaks an AI-generated concise summary of the transcript, and processes `1` (accept) or `2` (decline) DTMF dial pad choices.
+9. **MySQL Doctor-backed Bookings**: Core LLM functions `check_availability()` and `book_appointment()` check live doctor availability and save bookings directly in local MySQL schemas.
+10. **Detailed Post-Call summaries**: Evaluates call transcript upon disconnect, generating a beautiful structured markdown summary containing Call Details, Booking codes, and timeline highlights.
+11. **Production JSON Logging & Configuration**: Incorporates structured JSON logging formatters and centralized Pydantic settings loading.
 
 ---
 
@@ -37,6 +41,7 @@ backend/app/
 
 ### 📋 Prerequisites
 *   **MySQL Server** running locally on port `3306` (with password `254131` or configured differently in `.env`).
+*   **Ollama local LLM runner**: Install Ollama locally and download the `llama2` model using `ollama pull llama2`.
 *   **LiveKit Cloud Account** (Sign up at [livekit.io](https://livekit.io) for free API keys).
 *   **OpenAI API Key** (Get sk-proj keys from [platform.openai.com](https://platform.openai.com)).
 *   **Deepgram API Key** (Get sk-ef keys from [console.deepgram.com](https://console.deepgram.com)).
