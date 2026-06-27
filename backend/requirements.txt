@@ -1,0 +1,12 @@
+livekit
+livekit-agents
+livekit-plugins-openai
+livekit-plugins-deepgram
+twilio
+fastapi
+uvicorn
+python-dotenv
+pydantic
+aiohttp
+pymysql
+cryptography
