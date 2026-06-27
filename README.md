@@ -1,10 +1,10 @@
-# 🎙️ OpenVoice: Production-Grade Conversational Voice Agent Platform
+#  OpenVoice: Production-Grade Conversational Voice Agent Platform
 
 OpenVoice is a robust, modular, event-driven, and highly maintainable real-time voice agent platform. Built following the principles of **Clean Architecture**, it orchestrates LiveKit rooms, conversational LLM dialog, custom database-backed tool execution, real-time WebSocket event broadcasting, and Twilio warm transfers over public telephone networks.
 
 ---
 
-## 🏗️ Clean Architecture Overview
+##  Clean Architecture Overview
 
 The backend is structured into decoupled modules, guaranteeing a clear separation of concerns, testability, and database-agnostic domain models:
 
@@ -21,7 +21,7 @@ backend/app/
 
 ---
 
-## ⚡ Core Technical Capabilities
+##  Core Technical Capabilities
 
 1. **Sub-second Conversational Pipeline**: Combines Deepgram (STT/TTS), OpenAI (GPT-4o-mini), and Silero VAD into an extremely low-latency audio stream supporting interruptions and overlapping talk.
 2. **Local Ollama Llama2 Conversation**: Full local integration with **Ollama (`llama2`)** acting as the primary conversational and dental-clinic-scheduling chatbot.
@@ -37,10 +37,10 @@ backend/app/
 
 ---
 
-## ⚙️ Quick Start Installation & Execution
+##  Quick Start Installation & Execution
 
-### 📋 Prerequisites
-*   **MySQL Server** running locally on port `3306` (with password `254131` or configured differently in `.env`).
+###  Prerequisites
+*   **MySQL Server** running locally on port `3306` (with password `your password` or configured differently in `.env`).
 *   **Ollama local LLM runner**: Install Ollama locally and download the `llama2` model using `ollama pull llama2`.
 *   **LiveKit Cloud Account** (Sign up at [livekit.io](https://livekit.io) for free API keys).
 *   **OpenAI API Key** (Get sk-proj keys from [platform.openai.com](https://platform.openai.com)).
@@ -141,22 +141,22 @@ cd backend
 
 ---
 
-## 🎯 Verification and Demos
+##  Verification and Demos
 
-### 📱 Flow 1: Interactive Caller Interface
+###  Flow 1: Interactive Caller Interface
 1. Load `http://localhost:3000`.
 2. Click **Join as Caller** and allow mic permissions.
 3. Speak naturally to Agent A: *"My name is Alice Smith, I have a bad toothache, can I book an appointment on Tuesday at 10 AM, and my contact is 555-0199."*
 4. Agent A checks MySQL availability, registers the booking, and outputs a confirmation code.
 
-### 📊 Flow 2: Supervisor WebSocket Monitor & Takeover
+###  Flow 2: Supervisor WebSocket Monitor & Takeover
 1. Load `http://localhost:3000` in a separate side-by-side browser window.
 2. Click **Join as Watcher** to monitor.
 3. WebSockets establish connection instantly. As the caller speaks, view the transcripts populating in real-time, the state transitioning smoothly, and the collected info panel updating dynamically.
 4. View the **Live Call Event Timeline** mapping connection, verification, and confirmation milestones as they happen.
 5. Click **Take Over Call (Mute Agent A)**. Agent A's track is muted instantly at source, and the watcher's microphone is unmuted. The conversation continues seamlessly between Watcher and Caller.
 
-### 📞 Flow 3: Twilio Warm Transfer and Simulator
+###  Flow 3: Twilio Warm Transfer and Simulator
 1. While speaking to Agent A, say: *"Can I speak to a human?"*
 2. The **Live Call Event Timeline** flashes `Outbound Handoff Initiated`.
 3. If Twilio credentials are configured, a real outbound call dials. If running in a sandbox, click **Accept (Bridge Call)** or **Decline (Refuse)** on the Watcher's simulator control card.
