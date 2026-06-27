@@ -15,7 +15,13 @@ from app.schemas.appointment import AppointmentBase
 from app.services.database_service import book_db_appointment
 from app.models.session import CallSession
 
-openai_client = AsyncOpenAI(api_key=settings.OPENAI_API_KEY)
+# Extractor client (Always connects to OpenAI's Cloud for high-accuracy entity parsing)
+openai_extractor_client = AsyncOpenAI(api_key=settings.OPENAI_API_KEY or "none")
+
+# Conversation client (Connects locally to Ollama, or falls back to OpenAI)
+llm_conversation_client = AsyncOpenAI(
+    api_key=settings.OPENAI_API_KEY or "ollama", base_url=settings.LLM_BASE_URL
+)
 
 
 async def extract_fields_from_transcript(text: str) -> dict:
@@ -39,7 +45,7 @@ async def extract_fields_from_transcript(text: str) -> dict:
     )
 
     try:
-        response = await openai_client.chat.completions.create(
+        response = await openai_extractor_client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[{"role": "user", "content": prompt}],
             max_tokens=100,
@@ -117,7 +123,7 @@ async def generate_ai_reply(room_name: str, caller_text: str, db: Session) -> st
     history.append({"role": "user", "content": caller_text})
 
     try:
-        response = await openai_client.chat.completions.create(
+        response = await llm_conversation_client.chat.completions.create(
             model=settings.LLM_MODEL, messages=history, max_tokens=80, temperature=0.7
         )
         reply = response.choices[0].message.content.strip()
