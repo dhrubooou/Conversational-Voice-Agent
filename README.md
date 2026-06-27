@@ -129,7 +129,7 @@ MYSQL_DB=dental_clinic
 
 ---
 
-## 🧪 Running the Test Suite
+## Running the Test Suite
 
 We provide a self-contained unit and integration test suite using `pytest` and SQLite in-memory databases. It evaluates schema formats, state updates, transcripts and persistent CRUD boundaries.
 
