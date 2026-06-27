@@ -686,9 +686,17 @@ export default function Home() {
                   
                   {/* Card 1: Caller Details */}
                   <div className="bg-zinc-900/30 border border-zinc-800 rounded-2xl p-5 shadow-xl backdrop-blur-sm">
-                    <h3 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider flex items-center gap-2 border-b border-zinc-800/80 pb-3 mb-4">
-                      <User className="w-4 h-4 text-teal-400" />
-                      Caller Info (Collected Live)
+                    <h3 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider flex items-center justify-between border-b border-zinc-800/80 pb-3 mb-4">
+                      <span className="flex items-center gap-2">
+                        <User className="w-4 h-4 text-teal-400" />
+                        Caller Info (Collected Live)
+                      </span>
+                      {sessionState.agent_state === "thinking" && (
+                        <span className="flex items-center gap-1.5 text-xs text-amber-400 font-bold animate-pulse">
+                          <RefreshCw className="w-3 h-3 animate-spin" />
+                          AI Extracting...
+                        </span>
+                      )}
                     </h3>
                     
                     <div className="grid grid-cols-2 gap-4">
@@ -696,8 +704,10 @@ export default function Home() {
                         <span className="text-[10px] font-semibold text-zinc-500 uppercase block tracking-wider">Caller Name</span>
                         <input
                           type="text"
-                          placeholder="Not collected"
-                          className="bg-transparent border-0 border-b border-zinc-800 text-sm font-bold text-zinc-200 mt-0.5 block w-full focus:outline-none focus:border-teal-500 py-1"
+                          placeholder={sessionState.agent_state === "thinking" ? "Extracting..." : "Not collected"}
+                          className={`bg-transparent border-0 border-b border-zinc-800 text-sm font-bold mt-0.5 block w-full focus:outline-none focus:border-teal-500 py-1 ${
+                            sessionState.agent_state === "thinking" && !editableName ? "text-amber-400 animate-pulse" : "text-zinc-200"
+                          }`}
                           value={editableName}
                           onChange={(e) => setEditableName(e.target.value)}
                           disabled={sessionState.is_booked}
@@ -707,8 +717,10 @@ export default function Home() {
                         <span className="text-[10px] font-semibold text-zinc-500 uppercase block tracking-wider">Contact Number</span>
                         <input
                           type="text"
-                          placeholder="Not collected"
-                          className="bg-transparent border-0 border-b border-zinc-800 text-sm font-bold text-zinc-200 mt-0.5 block w-full focus:outline-none focus:border-teal-500 py-1"
+                          placeholder={sessionState.agent_state === "thinking" ? "Extracting..." : "Not collected"}
+                          className={`bg-transparent border-0 border-b border-zinc-800 text-sm font-bold mt-0.5 block w-full focus:outline-none focus:border-teal-500 py-1 ${
+                            sessionState.agent_state === "thinking" && !editablePhone ? "text-amber-400 animate-pulse" : "text-zinc-200"
+                          }`}
                           value={editablePhone}
                           onChange={(e) => setEditablePhone(e.target.value)}
                           disabled={sessionState.is_booked}
@@ -718,8 +730,10 @@ export default function Home() {
                         <span className="text-[10px] font-semibold text-zinc-500 uppercase block tracking-wider">Reason for Visit</span>
                         <input
                           type="text"
-                          placeholder="Not collected"
-                          className="bg-transparent border-0 border-b border-zinc-800 text-sm font-bold text-zinc-200 mt-0.5 block w-full focus:outline-none focus:border-teal-500 py-1"
+                          placeholder={sessionState.agent_state === "thinking" ? "Extracting..." : "Not collected"}
+                          className={`bg-transparent border-0 border-b border-zinc-800 text-sm font-bold mt-0.5 block w-full focus:outline-none focus:border-teal-500 py-1 ${
+                            sessionState.agent_state === "thinking" && !editableReason ? "text-amber-400 animate-pulse" : "text-zinc-200"
+                          }`}
                           value={editableReason}
                           onChange={(e) => setEditableReason(e.target.value)}
                           disabled={sessionState.is_booked}
@@ -729,8 +743,10 @@ export default function Home() {
                         <span className="text-[10px] font-semibold text-zinc-500 uppercase block tracking-wider">Preferred Date/Time</span>
                         <input
                           type="text"
-                          placeholder="Not collected"
-                          className="bg-transparent border-0 border-b border-zinc-800 text-sm font-bold text-zinc-200 mt-0.5 block w-full focus:outline-none focus:border-teal-500 py-1"
+                          placeholder={sessionState.agent_state === "thinking" ? "Extracting..." : "Not collected"}
+                          className={`bg-transparent border-0 border-b border-zinc-800 text-sm font-bold mt-0.5 block w-full focus:outline-none focus:border-teal-500 py-1 ${
+                            sessionState.agent_state === "thinking" && !editableTime ? "text-amber-400 animate-pulse" : "text-zinc-200"
+                          }`}
                           value={editableTime}
                           onChange={(e) => setEditableTime(e.target.value)}
                           disabled={sessionState.is_booked}
